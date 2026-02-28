@@ -215,12 +215,18 @@ def _run_agent_loop(client: OpenAI, messages: list):
     """Core loop for tool-using agent."""
     with console.status("[bold green]Thinking...[/bold green]", spinner="dots"):
         while True:
-            response = client.chat.completions.create(
-                model="gpt-5.2",
-                messages=messages,
-                tools=TOOLS_SCHEMA,
-                tool_choice="auto",
-            )
+            try:
+                response = client.chat.completions.create(
+                    model="gpt-5.2",
+                    messages=messages,
+                    tools=TOOLS_SCHEMA,
+                    tool_choice="auto",
+                )
+            except Exception as e:
+                console.print(f"[bold red]API Error:[/bold red] {type(e).__name__} - {str(e)}")
+                console.print("[yellow]Hint: Check your network connection, proxy settings, or if the model name is correct/available to your API key.[/yellow]")
+                break
+
             message = response.choices[0].message
             messages.append(message)
 

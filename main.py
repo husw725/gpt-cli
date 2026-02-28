@@ -216,7 +216,7 @@ def _run_agent_loop(client: OpenAI, messages: list):
     with console.status("[bold green]Thinking...[/bold green]", spinner="dots"):
         while True:
             response = client.chat.completions.create(
-                model="gpt-4o",
+                model="gpt-5.2",
                 messages=messages,
                 tools=TOOLS_SCHEMA,
                 tool_choice="auto",

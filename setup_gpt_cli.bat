@@ -27,14 +27,23 @@ if not exist "venv" (
 )
 
 echo.
-echo Success! You can now use 'gpt-cli.bat' from this directory.
+echo Would you like to add this folder to your user PATH automatically? (Y/N)
+set /p add_path=
+if /i "%add_path%"=="Y" (
+    echo Adding %INSTALL_DIR% to PATH...
+    setx PATH "%PATH%;%INSTALL_DIR%"
+    echo.
+    echo PATH updated. Please RESTART your terminal/CMD for changes to take effect.
+) else (
+    echo.
+    echo To use 'gpt-cli' from any folder manually:
+    echo 1. Search for 'Edit the system environment variables' in the Start menu.
+    echo 2. Click 'Environment Variables'.
+    echo 3. Under 'User variables', select 'Path' and click 'Edit'.
+    echo 4. Click 'New' and add this folder: %INSTALL_DIR%
+)
+
 echo.
-echo To use 'gpt-cli' from any folder:
-echo 1. Search for 'Edit the system environment variables' in the Start menu.
-echo 2. Click 'Environment Variables'.
-echo 3. Under 'User variables', select 'Path' and click 'Edit'.
-echo 4. Click 'New' and add this folder: %INSTALL_DIR%
-echo.
-echo After adding to PATH, you can run: gpt-cli chat "hello"
+echo Success! After setup, you can run: gpt-cli chat "hello"
 pause
 endlocal
